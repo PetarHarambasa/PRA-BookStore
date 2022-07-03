@@ -1,0 +1,58 @@
+﻿@model PRA_Knjizara.Models.Transactions.Loan
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Loan selected book</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group" hidden>
+                <label asp-for="BookID" class="control-label"></label>
+                <input asp-for="BookID" class="form-control" value=1/>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="UserID" class="control-label"></label>
+                <input asp-for="UserID" class="form-control" value=1/>
+            </div>
+            <div class="form-group">
+                <label asp-for="BorrowDate" class="control-label"></label>
+                <input asp-for="BorrowDate" class="form-control" />
+                <span asp-validation-for="BorrowDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DueDate" class="control-label"></label>
+                <input asp-for="DueDate" class="form-control" />
+                <span asp-validation-for="DueDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LoanFee" class="control-label"></label>
+                <input asp-for="LoanFee" class="form-control" />
+                <span asp-validation-for="LoanFee" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LateFee" class="control-label"></label>
+                <input asp-for="LateFee" class="form-control" />
+                <span asp-validation-for="LateFee" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="ReceiptID" class="control-label"></label>
+                <input asp-for="ReceiptID" class="form-control" value=1/>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsReturned" /> @Html.DisplayNameFor(model => model.IsReturned)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Loan a book" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-controller="Books" asp-action="Index">Back to List</a>
+</div>

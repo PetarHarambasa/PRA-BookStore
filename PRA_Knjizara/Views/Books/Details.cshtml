@@ -1,0 +1,78 @@
+﻿@model PRA_Knjizara.Models.Books.Book
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Book</h4>
+    <hr />
+    <img src="@Html.DisplayFor(model => model.ImagePath)" class="img-thumbnail" alt="Fotografija knjige" width="250" height="400"/>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ISBN)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ISBN)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        @if (User.IsInRole("Administrator"))
+        {
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.ImagePath)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.ImagePath)
+            </dd>
+        }
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Genere)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Genere)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Author)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Author)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Price) kn
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Condititon)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Condititon)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Stock)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Stock)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Summary)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Summary)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-controller="Loans" asp-action="Create">Loan</a> |
+    <a asp-controller="Purchases" asp-action="Create">Buy</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

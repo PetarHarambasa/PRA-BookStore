@@ -1,0 +1,90 @@
+﻿@model PRA_Knjizara.Models.Transactions.Purchase
+@{
+    ViewData["Title"] = "PayPal";
+}
+
+<h1>Pay with PayPal</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group" hidden>
+                <label asp-for="BookID" class="control-label"></label>
+                <input asp-for="BookID" class="form-control" value=1 />
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="ReceiptID" class="control-label"></label>
+                <input asp-for="ReceiptID" class="form-control" value=1 />
+            </div>
+            <div class="form-group" hidden>
+                <label asp-for="Quantity" class="control-label"></label>
+                <input asp-for="Quantity" type="number" class="form-control" value=1/>
+            </div>
+            <div class="form-group">
+                <div id="paypal-btn"></div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+
+<script src="https://www.paypal.com/sdk/js?client-id=AXFtdRtYXzwMEy7e91UVOUpIl6FFNRk7kRg3EJ6XeeypHlojDFiv92AN4kHkZzbFaMsAwLijrgq5z4Od&currency=USD&buyer-country=US"></script>
+
+<script>
+   
+    let _price = 50;
+    let _qty = 1;
+    let _total = _price*_qty;
+
+    $(document).on("change", "#Quantity", function(e) {
+        _qty  = parseInt($("#Quantity").val());
+        _total = _price*_qty; 
+    });
+
+    paypal.Buttons({
+     // Set up the transaction
+     createOrder: function(data, actions) {
+          return actions.order.create({
+              purchase_units: [{
+                   amount: {
+                      currency_code: "USD",
+                      value: _total.toString(),
+                      breakdown: {
+                        item_total: {  /* Required when including the `items` array */
+                          currency_code: "USD",
+                          value: _total.toString()
+                        }
+                      }
+                   },
+                   items: [
+                       {
+                        name: "First Product Name", /* Shows within upper-right dropdown during payment approval */
+                        description: "Optional descriptive text..", /* Item details will also be in the completed paypal.com transaction view */
+                       unit_amount: {
+                          currency_code: "USD",
+                          value: _price.toString()
+                        },
+                        quantity: _qty  
+                     }
+                   ]
+               }]
+           });
+         },
+       // Finalize the transaction
+       onApprove: function(data, actions) {
+           return actions.order.capture().then(function(orderData) {
+               // Successful capture! For demo purposes:
+               console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+               let transaction = orderData.purchase_units[0].payments.captures[0];
+                alert('Transaction '+ transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
+
+                var url = '@Url.Action("Index", "Purchases", new {  })';
+                window.location.href = url;
+            });
+         }
+}).render('#paypal-btn');
+</script>
+}

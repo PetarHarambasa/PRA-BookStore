@@ -1,0 +1,65 @@
+﻿@model IEnumerable<PRA_Knjizara.Models.Transactions.Loan>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>List of loaned books</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BorrowDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DueDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LoanFee)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LateFee)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsReturned)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BorrowDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DueDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LoanFee) kn
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LateFee) kn
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsReturned)
+                </td>
+                <td>
+                @if (User.IsInRole("Administrator"))
+                {
+                   <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                }
+                |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> 
+                |
+                @if (User.IsInRole("Administrator"))
+                {
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
